@@ -5,6 +5,8 @@ import About from '../components/About'
 
 /* Sandboxes */
 import JonnySandbox from '../components/sandboxes/JonnySandbox'
+import ScottSandbox from '../components/sandboxes/ScottSandbox'
+import AustinSandbox from '../components/sandboxes/AustinSandbox'
 
 
 Vue.use(Router);
@@ -25,6 +27,16 @@ export default new Router({
             path: '/jonnysandbox',
             name: 'jonny-sandbox',
             component: JonnySandbox
+        },
+        {
+            path: '/austinsandbox',
+            name: 'austin-sandbox',
+            component: AustinSandbox
+        },
+        {
+            path: '/scottsandbox',
+            name: 'scott-sandbox',
+            component: ScottSandbox
         }
 
     ]

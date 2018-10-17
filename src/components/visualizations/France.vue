@@ -28,7 +28,7 @@
                 .attr("height", h);
 
             // Needs to be in the public folder
-            d3.tsv("france.tsv", function (d) {
+            d3.tsv("data/france.tsv", function (d) {
                 return {
                     codePostal: +d["Postal Code"],
                     inseeCode: +d.inseecode,

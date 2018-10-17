@@ -4,6 +4,8 @@
             <router-link to="/">Home</router-link>
             <router-link to="/about">About</router-link>
             <router-link to="/jonnysandbox">Jonny's Dev Area</router-link>
+            <router-link to="/austinsandbox">Austin's Dev Area</router-link>
+            <router-link to="/scottsandbox">Scott's Dev Area</router-link>
         </nav>
         <router-view/>
     </div>

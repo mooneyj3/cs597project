@@ -5,11 +5,7 @@
 
 <script>
     // import dataset from '../../data/france.tsv'
-    /* eslint-disable */
     import * as d3 from 'd3'
-
-
-    d3.tsv("../../data/france.tsv");
 
     export default {
         name: 'Hello-France',
@@ -19,7 +15,7 @@
             const h = 600;
             let x, y;
             let pop;
-            let dataset
+            let dataset;
 
             let div = d3.select("body")
                 .append("div")
@@ -30,16 +26,6 @@
                 .append('svg')
                 .attr("width", w)
                 .attr("height", h);
-
-
-            // codePostal: +d["Postal Code"],
-            //     inseeCode: +d.inseecode,
-            //     place: d.place,
-            //     longitude: +d.x,
-            //     latitude: +d.y,
-            //     population: +d.population,
-            //     density: +d.density
-
 
             // Needs to be in the public folder
             d3.tsv("france.tsv", function (d) {
@@ -112,13 +98,6 @@
                         .call(d3.axisLeft(y));
                 });
         },
-
-        methods: {
-            drawPlot() {
-
-            }
-        }
-
     }
 
 </script>

@@ -1,0 +1,18 @@
+{
+  "passing": {
+    "C/A": 0,
+    "YDS": 0.04,
+    "TD": 4,
+    "INT": -2
+  },
+  "rushing": {
+    "RUSH": 0,
+    "YDS": 0.1,
+    "TD": 6
+  },
+  "receiving": {
+    "REC": 0,
+    "YDS": 0.1,
+    "TD": 6
+  }
+}

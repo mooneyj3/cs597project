@@ -1,15 +1,15 @@
 <template>
     <div class="scott-sandbox">
         <h1>Scott's Dev Area</h1>
-        <France></France>
+        <PlayerProjectedPoints></PlayerProjectedPoints>
     </div>
 </template>
 
 <script>
-    import France from "../visualizations/France";
+    import PlayerProjectedPoints from "../visualizations/PlayerProjectedPoints";
     export default {
         name: "ScottSandbox",
-        components: {France},
+        components: {PlayerProjectedPoints},
     }
 
 </script>

@@ -33,7 +33,7 @@
 
         mounted() {
             // Establish variables
-            let player = "Marshawn Lynch";
+            let player = "Kerryon Johnson";
 
             let xFrame = 1000,
                 yFrame = 500;

@@ -1,15 +1,15 @@
 <template>
     <div class="austin-sandbox">
         <h1>Austin's Dev Area</h1>
-        <France></France>
+        <Depth></Depth>
     </div>
 </template>
 
 <script>
-    import France from "../visualizations/France";
+    import Depth from "../visualizations/Depth";
     export default {
         name: "AustinSandbox",
-        components: {France},
+        components: {Depth},
     }
 
 </script>

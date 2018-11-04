@@ -1,5 +1,5 @@
 <template>
-
+    <div></div>
 </template>
 <style>
 
@@ -32,7 +32,7 @@
         name: "PlayerProjectedPoints",
 
         mounted() {
-            
+
             // Establish variables
             const player = 'Kerryon Johnson';
 
@@ -44,7 +44,7 @@
                 height = yFrame - margin.top - margin.bottom;
 
             let color = d3.scaleOrdinal(d3.schemeDark2);
-            
+
             // Establish svg variable
             let svg = d3.select(this.$el)
                         .append('svg')
@@ -62,7 +62,7 @@
                             .data(color.domain().slice().reverse())
                             .enter().append("g")
                             .attr("transform", (i) => `translate(0,${i * 20})`);
-                        
+
                         g.append("circle")
                             .attr("r", 7)
                             .style("fill", color);
@@ -82,9 +82,9 @@
                 .style("visibility", "hidden")
 
             // Load in the data and format it
-            d3.json('data/PlayerData.json')
+            d3.json('/data/PlayerData.json')
                     .then(function (data) {
-                    
+
                         let currPlayer = data[player];
                         let playerWeeks = currPlayer.Weeks;
                         let dataPoints = playerWeeks.length
@@ -96,7 +96,7 @@
                             d.AppliedPoints     = d.AppliedPoints == "--" ? 0 : +d.AppliedPoints;
                             d.PercentError      = d.PercentError =='--' ? 0 : +d.PercentError;
                             d.RunningError      = +d.RunningError;
-                        }); 
+                        });
 
                         // Establish range of graph
                         let maxPoints = d3.max(currPlayer.Weeks, function(d){
@@ -227,10 +227,10 @@
                             })
                         svg.append("g")
                             .attr("transform", `translate(${margin.left - 20},${margin.top - 20})`)
-                            .call(legend);                    
+                            .call(legend);
                     });
         }
     }
 
-    
+
 </script>

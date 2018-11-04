@@ -61,9 +61,8 @@
                     console.log(playerObj)
                 })
              */
-            d3.tsv('data/Kerryon_Johnson_PPP.tsv')
+            d3.tsv('/data/Kerryon_Johnson_PPP.tsv')
                 .then(function (data) {
-                    //console.log(data)
                     color.domain(d3.keys(data[0]).filter(function(key) { return key !== 'week'; }));
                     let keys = data.columns.filter(function(key) { return key !== 'week'; });
                     // data.forEach(function(d) {

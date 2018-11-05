@@ -17,10 +17,21 @@
         pointer-events: all;
     }
     .AppliedDot {
-        stroke: #fff;
+        stroke: whitesmoke;
     }
     .ProjectedDot {
-        stroke:#fff;
+        stroke:whitesmoke;
+    }
+    .legend text {
+        fill: whitesmoke;
+    }
+    .ProjectionTooltip {
+        font-family: Arial, Helvetica, sans-serif;
+        background: none;
+        color: whitesmoke;
+    }
+    .ProjectionTooltip text{
+        fill: whitesmoke;
     }
 </style>
 
@@ -57,7 +68,8 @@
             let legend = svg => {
                         const g = svg
                         .attr("font-family", "sans-serif")
-                            .attr("font-size", 10)
+                            .attr("font-size", 12)
+                            .attr('class', 'legend')
                             .selectAll("g")
                             .data(color.domain().slice().reverse())
                             .enter().append("g")
@@ -75,11 +87,13 @@
                                 return text[i]
                             });
             }
+            // Establish tooltip
             let tooltip = d3.select("body")
                 .append("div")
+                .attr('class', 'ProjectionTooltip')
                 .style("position", "absolute")
                 .style("z-index", "10")
-                .style("visibility", "hidden")
+                .style("visibility", "hidden");
 
             // Load in the data and format it
             d3.json('/data/PlayerData.json')
@@ -110,14 +124,6 @@
                         let y = d3.scaleLinear()
                                         .domain([0, maxPoints])
                                         .range([height, 0]);
-
-                        // Add a title
-                        svg.append('text')
-                            .attr('x', (width / 2))
-                            .attr('y', 0 - (margin.top / 2))
-                            .attr('text-anchor', 'middle')
-                            .text(player + ', ' + currPlayer.Posistion + " - " + currPlayer.Team)
-                            .attr('class', 'chart-title');
 
                         // Add the axes
                         svg.append('g')

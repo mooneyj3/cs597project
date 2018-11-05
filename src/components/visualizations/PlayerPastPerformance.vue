@@ -1,5 +1,5 @@
 <template>
-
+<div></div>
 </template>
 
 <script>
@@ -11,8 +11,8 @@
         // props: ['player', 'team'];
 
         mounted () {
-            let team = "DET";
-            let playerId = "00-0034349";
+            // let team = "DET";
+            // let playerId = "00-0034349";
 
             let xFrame = 1000,
                 yFrame = 500;
@@ -53,16 +53,9 @@
                 .text("Kerryon Johnson (RB - DET)")
                 .attr("class", "chart-title");
 
-            /* // JSON loading
-            d3.json('data/' + team + '_team_stats_.json')
-                .then(function (data) {
-                    let playerObj = data[team][playerId];
-
-                    console.log(playerObj)
-                })
-             */
             d3.tsv('/data/Kerryon_Johnson_PPP.tsv')
                 .then(function (data) {
+                    //console.log(data)
                     color.domain(d3.keys(data[0]).filter(function(key) { return key !== 'week'; }));
                     let keys = data.columns.filter(function(key) { return key !== 'week'; });
                     // data.forEach(function(d) {
@@ -96,8 +89,6 @@
                         .attr('class', 'area')
                         .attr('d', area)
                         .style('fill', function(d) { return color(d.key); })
-                        .on("mouseover", function(d) {
-                        })
                         .on("mousemove", function (d) {
                             d3.select(this)
                                 .style("fill", color(d.key))

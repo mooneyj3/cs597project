@@ -18,7 +18,7 @@
                 .append("div")
                 .attr("class", "tooltip")
                 .style("opacity", 0);
-            
+
             let offTxt = d3.select(this.$el).append("text").text('Offense: ').style("color", "blue").style("background-color", "black");
             let offTeam = d3.select(this.$el).append("select").style("background-color", "black");
             let defTxt = d3.select(this.$el).append("text").text('  Defense: ').style("color", "red").style("background-color", "black");
@@ -28,7 +28,7 @@
                 .append('svg')
                 .attr("width", w)
                 .attr("height", h);
-            
+
             // var legend = svg.append("g")
             //         .attr("class","legend")
             //         .attr("transform","translate(50,30)")
@@ -42,18 +42,18 @@
             // let def_sel =  svg
             //              .append('select')
             //              .attr("class", "defense_team");
-            
+
             // append field image background
             let imgs = svg.selectAll("image").data([0]);
                 imgs.enter()
                 .append("svg:image")
-                .attr("xlink:href", "data/field.jpg")
+                .attr("xlink:href", "/data/field.jpg")
                 .attr("x", "250")
                 .attr("y", "0")
                 .attr("width", "1000")
                 .attr("height", "1000");
-            
-            
+
+
             // change to set positions (maybe load this)
             var positions = { "offense" : [ { "label" : "QB", "cx" : 750, "cy" : 575, "r" : 20 },
                                             { "label" : "RB", "cx" : 750, "cy" : 675, "r" : 20 },
@@ -81,14 +81,14 @@
                                             { "label" : "LB", "cx" : 645, "cy" : 415, "r" : 20 },
                                           ]
                             };
-        
+
 
             //var legend = svg.selectAll(".legend").append("g").attr("class", "legend");
 
             var legend = svg.selectAll(".legend").data(positions.offense).enter().append("g");
-            
-            
-            var bg = legend.append("rect")    
+
+
+            var bg = legend.append("rect")
                 .attr("x", 900)
                 .attr("y", 50)
                 .attr("height", 120)
@@ -98,20 +98,20 @@
 
             legend.append("text") .attr("x", 940)
                 .attr("y", 65).attr("font-size", "12px").style("font-family","sans-serif").text("Injury Status").style('fill','white');
-            
+
             legend.append("text") .attr("x", 945)
                 .attr("y", 90).attr("font-size", "12px").style("font-family","sans-serif").text("Questionable").style('fill','white');
 
             legend.append("text") .attr("x", 945)
                 .attr("y", 110).attr("font-size", "12px").style("font-family","sans-serif").text("Doubtful").style('fill','white');
-            
+
             legend.append("text") .attr("x", 945)
                 .attr("y", 130).attr("font-size", "12px").style("font-family","sans-serif").text("Out").style('fill','white');
 
             legend.append("text") .attr("x", 945)
                 .attr("y", 150).attr("font-size", "12px").style("font-family","sans-serif").text("Unconfirmed").style('fill','white');
 
-            legend.append("rect") 
+            legend.append("rect")
                 .attr("x", 910)
                 .attr("y", 77)
                 .attr("height", 15)
@@ -119,7 +119,7 @@
                 .style('opacity', '1')
                 .style("fill", '#cccc00');
 
-            legend.append("rect") 
+            legend.append("rect")
                 .attr("x", 910)
                 .attr("y", 97)
                 .attr("height", 15)
@@ -127,7 +127,7 @@
                 .style('opacity', '1')
                 .style("fill", "#ff751a");
 
-            legend.append("rect") 
+            legend.append("rect")
                 .attr("x", 910)
                 .attr("y", 117)
                 .attr("height", 15)
@@ -135,7 +135,7 @@
                 .style('opacity', '1')
                 .style("fill", '#990000');
 
-            legend.append("rect") 
+            legend.append("rect")
                 .attr("x", 910)
                 .attr("y", 137)
                 .attr("height", 15)
@@ -150,7 +150,7 @@
             var g_o = nodes.data(positions.offense).enter().append("g");
 
             g_o.append("circle")
-                .attr("class", "offense")   
+                .attr("class", "offense")
                 .attr("r", 0)
                 .style("opacity", 1)
                 .style("fill", "blue")
@@ -178,12 +178,12 @@
                 .text(function(d){
                     return d.label;
                 });
-            
+
             // append defensive positions
             var g_d = nodes.data(positions.defense).enter().append("g");
 
             g_d.append("circle")
-                .attr("class", "defense")   
+                .attr("class", "defense")
                 .attr("r", 0)
                 .style("opacity", 1)
                 .style("fill", "red")
@@ -213,10 +213,10 @@
                 });
 
             //import data
-            Promise.all([d3.json("data/depth/depth_week_1.json"), d3.json("data/injuries/injuries_week_1.json"),])
+            Promise.all([d3.json("/data/depth/depth_week_1.json"), d3.json("/data/injuries/injuries_week_1.json"),])
                 .then(function(files) {
-                    //console.log(data.length);
-                    //console.log(data[0]);
+                    // console.log(data.length);
+                    // console.log(data[0]);
 
                     var data = files[0];
                     var injuries = files[1];
@@ -229,7 +229,7 @@
                         .append('option')
                             .attr('value',function (d,i) { return i })
                             .text(function (d) { return d.name });
-                    
+
                     defTeam.on('change',updateCircles)
                         .selectAll('option')
                             .data(data[0].teams)
@@ -254,7 +254,7 @@
                         .attr("font-size", "16px")
                         .attr("font-weight", "bold")
                         .style("fill", "white");
-                    
+
                     updateCircles();
 
                     function updateCircles() {
@@ -277,7 +277,7 @@
                             }
                         }
 
-                        g_o.on("mouseover", function(d) { tooltip.style("display", null); 
+                        g_o.on("mouseover", function(d) { tooltip.style("display", null);
                             var sel = d3.select(this)
                                 .style("opacity", 0.2)
 
@@ -288,7 +288,7 @@
                             var players = data3.filter(function(data){if(playerPos == 'T'){
                                 if(data.position.name != 'TE'){
                                     return data.position.name.includes(playerPos)
-                                } 
+                                }
                                 } else {
                                      return data.position.name.includes(playerPos)
                                 }}).forEach(function(d) {
@@ -355,7 +355,7 @@
                                                 .attr("class", "test")
                                                 .style("fill", "#ff6600").text(depthList[i].name + ' ' + depthList[i].depth + ' ' + depthList[i].position);
                                         }
-                                    
+
                                     } else {
                                          tooltip.select("text").append('tspan').attr("x", 75)
                                             .attr("dy", "1.2em")
@@ -365,7 +365,7 @@
                                             .attr("class", "test")
                                             .attr("class", "test")
                                             .style("fill", "#c61aff").text(depthList[i].name + ' ' + depthList[i].depth + ' ' + depthList[i].position);
-                                             
+
                                     }
                                 } else {
                                     tooltip.select("text").append('tspan').attr("x", 75)
@@ -384,14 +384,14 @@
                             tooltip.select("rect").attr("width", 150)
                             tooltip.select("rect").attr("height", 17*(depthList.length))
                         })
-                        .on("mouseout", function(d) { 
+                        .on("mouseout", function(d) {
                             tooltip.style("display", "none");
                             tooltip.selectAll('tspan').remove();
                             d3.select(this)
                             .style("opacity", 1)
                         })
 
-                        g_d.on("mouseover", function(d) { tooltip.style("display", null); 
+                        g_d.on("mouseover", function(d) { tooltip.style("display", null);
                             var sel = d3.select(this)
                                 .style("opacity", 0.2)
 
@@ -406,14 +406,14 @@
                                     } else {
                                         return data.position.name.includes(playerPos)
                                     }
-   
+
                                 } else if(playerPos == 'LB'){
                                     if(data.position.name == 'MIKE' || data.position.name == 'SAM' || data.position.name == 'WILL'){
                                         return data.position.name
                                     } else {
                                         return data.position.name.includes(playerPos)
                                     }
-   
+
                                 } else if(playerPos == 'S'){
                                     if(!data.position.name.includes('LB')){
                                         return data.position.name.includes(playerPos)
@@ -424,7 +424,7 @@
                                     } else {
                                         return data.position.name.includes(playerPos)
                                     }
-   
+
                                 } else {
                                      return data.position.name.includes(playerPos)
                                 }}).forEach(function(d) {
@@ -482,7 +482,7 @@
                                                 .attr("font-weight", "bold")
                                                 .attr("class", "test")
                                                 .style("fill", "#c61aff").text(depthList[i].name + ' ' + depthList[i].depth + ' ' + depthList[i].position);
-                                            
+
                                         }
                                     }
                                 } else {
@@ -495,14 +495,14 @@
                                             .style("fill", "white").text(depthList[i].name + ' ' + depthList[i].depth + ' ' + depthList[i].position);
                                 }
                             }
-                       
+
                             var xPosition = d3.event.pageX + 20;
                             var yPosition = d3.event.pageY - 220;
                             tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
                             tooltip.select("rect").attr("width", 150)
                             tooltip.select("rect").attr("height", 17*(depthList.length))
                         })
-                        .on("mouseout", function(d) { 
+                        .on("mouseout", function(d) {
                             tooltip.style("display", "none");
                             tooltip.selectAll('tspan').remove();
                             d3.select(this)
@@ -510,7 +510,7 @@
                         })
                     }
                 });
-                
+
         },
     }
 
@@ -539,14 +539,14 @@
     stroke: black;
     stroke-width: 3px;
     stroke-linejoin: round;
-    } 
+    }
 
     .defense {
     fill: none;
     stroke: black;
     stroke-width: 3px;
     stroke-linejoin: round;
-    } 
+    }
 
     .offtext {
         fill: white;
@@ -555,8 +555,8 @@
     stroke-linejoin: round;
     }
 
-    select { 
+    select {
     /* Whatever color  you want */
-    background-color: #82caff; 
+    background-color: #82caff;
     }
 </style>

@@ -10,6 +10,8 @@
 
             const w = 1500;
             const h = 1500;
+            const shiftX = 40;
+            const shiftY = 10;
             let x, y;
             let dataset;
 
@@ -19,10 +21,11 @@
                 .attr("class", "tooltip")
                 .style("opacity", 0);
 
-            let offTxt = d3.select(this.$el).append("text").text('Offense: ').style("color", "blue").style("background-color", "black");
+            let offTxt = d3.select(this.$el).append("text").text('Offense: ').style("color", "blue").style("background-color", "black").style("margin-left","200");
             let offTeam = d3.select(this.$el).append("select").style("background-color", "black");
-            let defTxt = d3.select(this.$el).append("text").text('  Defense: ').style("color", "red").style("background-color", "black");
-            let defTeam = d3.select(this.$el).append("select").style("background-color", "black");
+            let defTxt = d3.select(this.$el).append("text").attr("x",200).text('  Defense: ').style("color", "red").style("background-color", "black");
+            let defTeam = d3.select(this.$el).append("select").style("background-color", "black").style("x",200);
+            
             // setup canvas
             let svg = d3.select(this.$el)
                 .append('svg')
@@ -43,42 +46,49 @@
             //              .append('select')
             //              .attr("class", "defense_team");
 
+
+
             // append field image background
             let imgs = svg.selectAll("image").data([0]);
                 imgs.enter()
                 .append("svg:image")
                 .attr("xlink:href", "/data/field.jpg")
-                .attr("x", "250")
-                .attr("y", "0")
+                .attr("x", shiftX)
+                .attr("y", shiftY)
                 .attr("width", "1000")
                 .attr("height", "1000");
 
+            // let offTxt = svg.selectAll(".offTxt").data([0]).enter().append("text").attr("x", shiftX+200).attr("y", shiftY+50).text('Offense: ').style("color", "blue").style("background-color", "black");
+            // let offTeam = svg.selectAll(".offTeam").append("select").style("background-color", "black");
+            // let defTxt = svg.selectAll(".defTxt").append("text").attr("x",200).text('  Defense: ').style("color", "red").style("background-color", "black");
+            // let defTeam = svg.selectAll(".defTeam").append("select").style("background-color", "black").style("x",200);
+
 
             // change to set positions (maybe load this)
-            var positions = { "offense" : [ { "label" : "QB", "cx" : 750, "cy" : 575, "r" : 20 },
-                                            { "label" : "RB", "cx" : 750, "cy" : 675, "r" : 20 },
-                                            { "label" : "WR", "cx" : 500, "cy" : 525, "r" : 20 },
-                                            { "label" : "WR", "cx" : 1000, "cy" : 535, "r" : 20 },
-                                            { "label" : "TE", "cx" : 900, "cy" : 535, "r" : 20 },
-                                            { "label" : "G", "cx" : 700, "cy" : 525, "r" : 20 },
-                                            { "label" : "G", "cx" : 800, "cy" : 525, "r" : 20 },
-                                            { "label" : "C", "cx" : 750, "cy" : 525, "r" : 20 },
-                                            { "label" : "FB", "cx" : 750, "cy" : 625, "r" : 20 },
-                                            { "label" : "T", "cx" : 650, "cy" : 525, "r" : 20 },
-                                            { "label" : "T", "cx" : 850, "cy" : 525, "r" : 20 },
+            var positions = { "offense" : [ { "label" : "QB", "cx" : shiftX + 500, "cy" : shiftY + 575, "r" : 20 },
+                                            { "label" : "RB", "cx" : shiftX + 500, "cy" : shiftY + 675, "r" : 20 },
+                                            { "label" : "WR", "cx" : shiftX + 250, "cy" : shiftY + 525, "r" : 20 },
+                                            { "label" : "WR", "cx" : shiftX + 750, "cy" : shiftY + 535, "r" : 20 },
+                                            { "label" : "TE", "cx" : shiftX + 650, "cy" : shiftY + 535, "r" : 20 },
+                                            { "label" : "G", "cx" : shiftX + 450, "cy" : shiftY + 525, "r" : 20 },
+                                            { "label" : "G", "cx" : shiftX + 550, "cy" : shiftY + 525, "r" : 20 },
+                                            { "label" : "C", "cx" : shiftX + 500, "cy" : shiftY + 525, "r" : 20 },
+                                            { "label" : "FB", "cx" : shiftX + 500, "cy" : shiftY + 625, "r" : 20 },
+                                            { "label" : "T", "cx" : shiftX + 400, "cy" : shiftY + 525, "r" : 20 },
+                                            { "label" : "T", "cx" : shiftX + 600, "cy" : shiftY + 525, "r" : 20 },
                                           ],
 
-                              "defense" : [ { "label" : "CB", "cx" : 500, "cy" : 460, "r" : 20 },
-                                            { "label" : "CB", "cx" : 1000, "cy" : 460, "r" : 20 },
-                                            { "label" : "LB", "cx" : 845, "cy" : 415, "r" : 20 },
-                                            { "label" : "DT", "cx" : 720, "cy" : 475, "r" : 20 },
-                                            { "label" : "DT", "cx" : 780, "cy" : 475, "r" : 20 },
-                                            { "label" : "S", "cx" : 875, "cy" : 325, "r" : 20 },
-                                            { "label" : "DE", "cx" : 660, "cy" : 475, "r" : 20 },
-                                            { "label" : "DE", "cx" : 840, "cy" : 475, "r" : 20 },
-                                            { "label" : "LB", "cx" : 750, "cy" : 375, "r" : 20 },
-                                            { "label" : "S", "cx" : 625, "cy" : 275, "r" : 20 },
-                                            { "label" : "LB", "cx" : 645, "cy" : 415, "r" : 20 },
+                              "defense" : [ { "label" : "CB", "cx" : shiftX + 250, "cy" : shiftY + 460, "r" : 20 },
+                                            { "label" : "CB", "cx" : shiftX + 750, "cy" : shiftY + 460, "r" : 20 },
+                                            { "label" : "LB", "cx" : shiftX + 595, "cy" : shiftY + 415, "r" : 20 },
+                                            { "label" : "DT", "cx" : shiftX + 470, "cy" : shiftY + 475, "r" : 20 },
+                                            { "label" : "DT", "cx" : shiftX + 530, "cy" : shiftY + 475, "r" : 20 },
+                                            { "label" : "S", "cx" : shiftX + 625, "cy" : shiftY + 325, "r" : 20 },
+                                            { "label" : "DE", "cx" : shiftX + 410, "cy" : shiftY + 475, "r" : 20 },
+                                            { "label" : "DE", "cx" : shiftX + 590, "cy" : shiftY + 475, "r" : 20 },
+                                            { "label" : "LB", "cx" : shiftX + 500, "cy" : shiftY + 375, "r" : 20 },
+                                            { "label" : "S", "cx" : shiftX + 375, "cy" : shiftY + 275, "r" : 20 },
+                                            { "label" : "LB", "cx" : shiftX + 395, "cy" : shiftY + 415, "r" : 20 },
                                           ]
                             };
 
@@ -87,57 +97,56 @@
 
             var legend = svg.selectAll(".legend").data(positions.offense).enter().append("g");
 
-
             var bg = legend.append("rect")
-                .attr("x", 900)
-                .attr("y", 50)
+                .attr("x", shiftX + 650)
+                .attr("y", shiftY + 50)
                 .attr("height", 120)
                 .attr("width", 150)
                 .style('opacity', '0.1')
                 .style("fill", 'black');
 
-            legend.append("text") .attr("x", 940)
-                .attr("y", 65).attr("font-size", "12px").style("font-family","sans-serif").text("Injury Status").style('fill','white');
+            legend.append("text") .attr("x", shiftX + 690)
+                .attr("y", shiftY + 65).attr("font-size", "12px").style("font-family","sans-serif").text("Injury Status").style('fill','white');
 
-            legend.append("text") .attr("x", 945)
-                .attr("y", 90).attr("font-size", "12px").style("font-family","sans-serif").text("Questionable").style('fill','white');
+            legend.append("text") .attr("x", shiftX + 695)
+                .attr("y", shiftY + 90).attr("font-size", "12px").style("font-family","sans-serif").text("Questionable").style('fill','white');
 
-            legend.append("text") .attr("x", 945)
-                .attr("y", 110).attr("font-size", "12px").style("font-family","sans-serif").text("Doubtful").style('fill','white');
+            legend.append("text") .attr("x", shiftX + 695)
+                .attr("y", shiftY + 110).attr("font-size", "12px").style("font-family","sans-serif").text("Doubtful").style('fill','white');
 
-            legend.append("text") .attr("x", 945)
-                .attr("y", 130).attr("font-size", "12px").style("font-family","sans-serif").text("Out").style('fill','white');
+            legend.append("text") .attr("x", shiftX + 695)
+                .attr("y", shiftY + 130).attr("font-size", "12px").style("font-family","sans-serif").text("Out").style('fill','white');
 
-            legend.append("text") .attr("x", 945)
-                .attr("y", 150).attr("font-size", "12px").style("font-family","sans-serif").text("Unconfirmed").style('fill','white');
+            legend.append("text") .attr("x", shiftX + 695)
+                .attr("y", shiftY + 150).attr("font-size", "12px").style("font-family","sans-serif").text("Unconfirmed").style('fill','white');
 
             legend.append("rect")
-                .attr("x", 910)
-                .attr("y", 77)
+                .attr("x", shiftX + 660)
+                .attr("y", shiftY + 77)
                 .attr("height", 15)
                 .attr("width", 15)
                 .style('opacity', '1')
                 .style("fill", '#cccc00');
 
             legend.append("rect")
-                .attr("x", 910)
-                .attr("y", 97)
+                .attr("x", shiftX + 660)
+                .attr("y", shiftY + 97)
                 .attr("height", 15)
                 .attr("width", 15)
                 .style('opacity', '1')
                 .style("fill", "#ff751a");
 
             legend.append("rect")
-                .attr("x", 910)
-                .attr("y", 117)
+                .attr("x", shiftX + 660)
+                .attr("y", shiftY + 117)
                 .attr("height", 15)
                 .attr("width", 15)
                 .style('opacity', '1')
                 .style("fill", '#990000');
 
             legend.append("rect")
-                .attr("x", 910)
-                .attr("y", 137)
+                .attr("x", shiftX + 660)
+                .attr("y", shiftY + 137)
                 .attr("height", 15)
                 .attr("width", 15)
                 .style('opacity', '1')
@@ -378,8 +387,11 @@
                                 }
                             }
 
-                            var xPosition = d3.event.pageX + 20;
-                            var yPosition = d3.event.pageY - 220;
+                            //var xPosition = d3.event.pageX + 20;
+                            //var yPosition = d3.event.pageY - 220;
+
+                            var xPosition = d3.mouse(this)[0] + 20;
+                            var yPosition = d3.mouse(this)[1] + 20;
                             tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
                             tooltip.select("rect").attr("width", 150)
                             tooltip.select("rect").attr("height", 17*(depthList.length))
@@ -496,8 +508,11 @@
                                 }
                             }
 
-                            var xPosition = d3.event.pageX + 20;
-                            var yPosition = d3.event.pageY - 220;
+                            //var xPosition = d3.event.pageX + 20;
+                            //var yPosition = d3.event.pageY - 220;
+
+                            var xPosition = d3.mouse(this)[0] + 20;
+                            var yPosition = d3.mouse(this)[1] - 100;
                             tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
                             tooltip.select("rect").attr("width", 150)
                             tooltip.select("rect").attr("height", 17*(depthList.length))

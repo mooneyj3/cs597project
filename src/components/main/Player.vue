@@ -31,11 +31,11 @@
         <v-card-actions>
             <div id="teamdepth">
                 <h2>Team Depth</h2>
-                <p>The following link takes you to the field view. There were some D3 conflicts integrating this. On the main player page.  The prototype is accessible at teh link below</p>
+                <!-- <p>The following link takes you to the field view. There were some D3 conflicts integrating this. On the main player page.  The prototype is accessible at teh link below</p>
                 <a href="/austinsandbox" target="_blank">
                     Link to Football field view with players
-                </a>
-                <!--<Depth></Depth>-->
+                </a> -->
+                <Depth></Depth>
 
             </div>
         </v-card-actions>

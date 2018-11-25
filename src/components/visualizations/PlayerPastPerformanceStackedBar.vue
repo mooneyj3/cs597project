@@ -52,7 +52,6 @@
                     color.domain(data.columns.slice(1));
                     // let keys = data.columns.filter(function (key) {return key !== 'week';});
                     let keys = data.columns.slice(1);
-                    console.log(keys);
 
                     let layers = d3.stack().keys(keys)(data);
 
@@ -79,7 +78,7 @@
                         // .attr('height', d => y(d[0]) - y(d[1] + d[0]))
                         .attr('height', function (d) {return y(d[0]) - y(d[1]); })
                         .attr('width', x.bandwidth() - 40)
-                        .on("mouseover", function (d) {
+                        .on("mousemove", function (d) {
                             d3.select(this).attr('fill-opacity', 0.8);
 
                             let xPosition = event.pageX;
@@ -90,12 +89,29 @@
                             div.transition().style("opacity", .9);
                             div.html(value)
                                 .style("left", (xPosition) + "px")
-                                .style("top", (yPosition - 28) + "px");;
+                                .style("top", (yPosition - 28) + "px");
                         })
                         .on("mouseout", function (d) {
                             d3.select(this).attr('fill-opacity', "none");
+                            d3.select(div).remove();
                             div.transition().style("opacity", 0);
                         });
+
+                    // bye week
+                    svg.append('rect')
+                        .attr('x', function () {return x(6) + 20;})
+                        .attr('y', function () {return y(15)})
+                        .attr('height', function () {return y(5); })
+                        .attr('width', x.bandwidth() - 40)
+                        .style('fill', 'DimGray');
+                    ;
+                    svg.append('text')
+                        .attr('x', function () {return x(6) + 45;})
+                        .attr('y', function () {return y(7)})
+                        .style('fill', 'white')
+                        .style("font-size", "24px")
+                        .html("BYE");
+                    ;
 
                     // x-axis
                     svg.append('g')

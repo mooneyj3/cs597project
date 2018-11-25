@@ -9,7 +9,7 @@
         data() {
             return {
                 msg: 'Hello Tableau Fans!',
-                url: "https://public.tableau.com/views/PrototypingNFLData/Sheet1?:embed=y&:display_count=yes",
+                url: "https://public.tableau.com/views/PrototypingNFLData/DET?:embed=y&:display_count=yes&publish=yes",
                 options: {hideTabs: true},
             }
         },

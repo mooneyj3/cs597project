@@ -14,8 +14,11 @@
         mounted() {
             // let team = "DET";
             // let playerId = "00-0034349";
+            let div = d3.select("body").append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0);
 
-            // const play_types = ['Rushing Yards', 'Rushing TDs', 'Receiving Rec.', 'Receiving Yards', 'Receiving TDs'];
+            const play_types = ['Rushing Yards', 'Rushing TDs', 'Receiving Rec.', 'Receiving Yards', 'Receiving TDs'];
             let xFrame = 1000,
                 yFrame = 500;
 
@@ -48,9 +51,9 @@
                     color.domain(d3.keys(data[0]).filter(function (key) {
                         return key !== 'week';
                     }));
-                    let keys = data.columns.filter(function (key) {
-                        return key !== 'week';
-                    });
+                    // let keys = data.columns.filter(function (key) {return key !== 'week';});
+                    let keys = data.columns.slice(1);
+                    console.log(keys);
 
                     let layers = d3.stack().keys(keys)(data);
 
@@ -62,7 +65,7 @@
                         .enter()
                         .append('g')
                         .attr('class', 'layer')
-                        .style('fill', (d, i) => (color(i)));
+                        .style('fill', function (d) { return color(d.key); });
 
                     layer.selectAll('rect')
                         .data(d => d)
@@ -71,13 +74,32 @@
                         .attr('x', d => x(d.data.week) + 25)
                         .attr('y', d => y(d[0] + d[1]))
                         .attr('height', d => y(d[0]) - y(d[1] + d[0]))
-                        .attr('width', x.bandwidth() - 40);
+                        .attr('width', x.bandwidth() - 40)
+                        .on("mouseover", function (d) {
+                            d3.select(this).attr('fill-opacity', 0.8);
 
+                            let xPosition = event.pageX;
+                            let yPosition = event.pageY;
+
+                            let value = d
+
+                            div.transition().style("opacity", .9);
+                            div.html(value)
+                                .style("left", (xPosition) + "px")
+                                .style("top", (yPosition - 28) + "px");;
+                        })
+                        .on("mouseout", function (d) {
+                            d3.select(this).attr('fill-opacity', "none");
+                            div.transition().style("opacity", 0);
+                        });
+
+                    // x-axis
                     svg.append('g')
                         .attr('class', 'axis axis--x')
                         .attr('transform', `translate(0,${height})`)
-                        .call(xAxis)
+                        .call(xAxis);
 
+                    // y-axis
                     svg.append('g')
                         .attr('class', 'y axis')
                         .call(yAxis);
@@ -103,7 +125,7 @@
                             .attr("y", 9.5)
                             .attr("dy", "0.35em")
                             .text(d => d);
-                    }
+                    };
 
                     svg.append("g")
                         .attr("transform", `translate(${margin.left + 1},${margin.top})`)

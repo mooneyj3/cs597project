@@ -48,9 +48,8 @@
 
             d3.tsv('/data/Kerryon_Johnson_PPP.tsv')
                 .then(function (data) {
-                    color.domain(d3.keys(data[0]).filter(function (key) {
-                        return key !== 'week';
-                    }));
+                    // color.domain(d3.keys(data[0]).filter(function (key) {return key !== 'week';}));
+                    color.domain(data.columns.slice(1));
                     // let keys = data.columns.filter(function (key) {return key !== 'week';});
                     let keys = data.columns.slice(1);
                     console.log(keys);
@@ -58,7 +57,9 @@
                     let layers = d3.stack().keys(keys)(data);
 
                     x.domain(layers[0].map(d => d.data.week));
-                    y.domain([0, d3.max(layers[layers.length - 1], d => (d[0] + d[1]))]).nice();
+                    // y.domain([0, d3.max(layers[layers.length - 1], d => (d[0] + d[1]))]).nice();
+                    y.domain([0, d3.max(layers[layers.length - 1], function(d) {return d[1]})]).nice();
+                    // y.domain([0, d3.max(data, function(d) { return d.total; })]).nice();
 
                     const layer = svg.selectAll('layer')
                         .data(layers)
@@ -68,12 +69,15 @@
                         .style('fill', function (d) { return color(d.key); });
 
                     layer.selectAll('rect')
-                        .data(d => d)
+                        .data(function(d) { return d; })
                         .enter()
                         .append('rect')
-                        .attr('x', d => x(d.data.week) + 25)
-                        .attr('y', d => y(d[0] + d[1]))
-                        .attr('height', d => y(d[0]) - y(d[1] + d[0]))
+                        // .attr('x', d => x(d.data.week) + 25)
+                        .attr('x', function (d) {return x(d.data.week) + 20;})
+                        // .attr('y', d => y(d[0] + d[1]))
+                        .attr('y', function (d) {return y(d[1])})
+                        // .attr('height', d => y(d[0]) - y(d[1] + d[0]))
+                        .attr('height', function (d) {return y(d[0]) - y(d[1]); })
                         .attr('width', x.bandwidth() - 40)
                         .on("mouseover", function (d) {
                             d3.select(this).attr('fill-opacity', 0.8);
@@ -81,7 +85,7 @@
                             let xPosition = event.pageX;
                             let yPosition = event.pageY;
 
-                            let value = d
+                            let value = Math.round((d[1] - d[0]) * 100) / 100;
 
                             div.transition().style("opacity", .9);
                             div.html(value)

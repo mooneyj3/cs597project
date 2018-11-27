@@ -43,6 +43,9 @@
                                 <div class="headline">Projected vs. Actual Points</div>
                             </v-card-title>
                             <v-card-actions>
+                                The following shows the projected vs. actual points. Projections are sourced from ESPN.
+                            </v-card-actions>
+                            <v-card-actions>
                                 <PlayerProjectedPoints></PlayerProjectedPoints>
                             </v-card-actions>
                         </v-card>
@@ -55,6 +58,9 @@
                                 <div class="headline">Past Performance Fantasy Point Breakdown</div>
                             </v-card-title>
                             <v-card-actions>
+                                The following shows the past performance broken down by fantasy points.
+                            </v-card-actions>
+                            <v-card-actions>
                                 <PlayerPastPerformanceStackedBar></PlayerPastPerformanceStackedBar>
                             </v-card-actions>
                         </v-card>
@@ -64,8 +70,11 @@
                     <v-flex xs12>
                         <v-card color="blue-grey darken-2" class="white--text">
                             <v-card-title primary-title>
-                                <div class="headline">Team Treemap</div>
+                                <div class="headline">Fantasy Points for Detroit Lions</div>
                             </v-card-title>
+                            <v-card-actions>
+                                The following visualization is a breakdown of the current player's team stats.
+                            </v-card-actions>
                             <v-card-actions>
                                 <TableauTreeMap></TableauTreeMap>
                             </v-card-actions>
@@ -78,6 +87,9 @@
                             <v-card-title primary-title>
                                 <div class="headline">Team Depth</div>
                             </v-card-title>
+                            <v-card-actions>
+                                The following visualization is a breakdown of team depth for the current player and opponents.  It shows team injury by position.  By default, the current players offense will show against the opponents defense. Clicking on the team name allows you to change the team.
+                            </v-card-actions>
                             <v-card-actions>
                                 <Depth></Depth>
                             </v-card-actions>

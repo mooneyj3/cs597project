@@ -1,7 +1,7 @@
 <template>
     <v-app id="inspire" dark>
         <!-- Side Tray -->
-        <v-navigation-drawer v-model="drawer" clipped fixed app>
+        <v-navigation-drawer v-model="drawer" temporary clipped fixed app>
             <v-list dense>
                 <!-- Tray 1 -->
                 <v-list-tile click="" href="/players">

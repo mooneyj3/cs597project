@@ -21,11 +21,11 @@
                 .attr("class", "tooltip")
                 .style("opacity", 0);
 
-            let offTxt = d3.select(this.$el).append("text").text('Offense: ').style("color", "blue").style("background-color", "black").style("margin-left","200");
+            let offTxt = d3.select(this.$el).append("text").text('Offense: ').style("color", "blue").style("background-color", "black").style("margin-left","25%");
             let offTeam = d3.select(this.$el).append("select").style("background-color", "black");
             let defTxt = d3.select(this.$el).append("text").attr("x",200).text('  Defense: ').style("color", "red").style("background-color", "black");
             let defTeam = d3.select(this.$el).append("select").style("background-color", "black").style("x",200);
-            
+
             // setup canvas
             let svg = d3.select(this.$el)
                 .append('svg')
@@ -264,7 +264,12 @@
                         .attr("font-weight", "bold")
                         .style("fill", "white");
 
+
+                    offTeam.property('value', '10');
+                    defTeam.property('value', '27');
+
                     updateCircles();
+
 
                     function updateCircles() {
                         var offValue = offTeam.property('value');

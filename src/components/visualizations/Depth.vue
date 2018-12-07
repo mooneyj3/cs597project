@@ -21,10 +21,15 @@
                 .attr("class", "tooltip")
                 .style("opacity", 0);
 
-            let offTxt = d3.select(this.$el).append("text").text('Offense: ').style("color", "blue").style("background-color", "black").style("margin-left","25%");
-            let offTeam = d3.select(this.$el).append("select").style("background-color", "black");
-            let defTxt = d3.select(this.$el).append("text").attr("x",200).text('  Defense: ').style("color", "red").style("background-color", "black");
-            let defTeam = d3.select(this.$el).append("select").style("background-color", "black").style("x",200);
+            // let offTxt = d3.select(this.$el).append("text").text('Offense: ').style("color", "blue").style("background-color", "black").style("margin-left","25%");
+            // let offTeam = d3.select(this.$el).append("select").style("background-color", "black");
+            // let defTxt = d3.select(this.$el).append("text").attr("x",200).text('  Defense: ').style("color", "red").style("background-color", "black");
+            // let defTeam = d3.select(this.$el).append("select").style("background-color", "black").style("x",200);
+
+            let weekTxt = d3.select(this.$el).append("text").attr("x",200).text('Select Week: ').style("color", "white")
+                        .style("background-color", "black")
+                        .style("margin-left","30%");
+            let weekList = d3.select(this.$el).append("select").style("background-color", "black").style("x",200);
 
             // setup canvas
             let svg = d3.select(this.$el)
@@ -94,6 +99,20 @@
 
 
             //var legend = svg.selectAll(".legend").append("g").attr("class", "legend");
+
+            var defImg = svg.selectAll(".defimg").data(positions.defense).enter().append("svg:image")
+                         .attr("x", shiftX + 425)
+                         .attr("y", shiftY + 105)
+                          .attr("height", 150)
+                .attr("width", 150)
+                         .attr("xlink:href", "/data/teams/patriots.png")
+
+            var offImg = svg.selectAll(".offimg").data(positions.offense).enter().append("svg:image")
+                         .attr("x", shiftX + 425)
+                         .attr("y", shiftY + 720)
+                         .attr("height", 150)
+                .attr("width", 150)
+                         .attr("xlink:href", "/data/teams/lions.png")
 
             var legend = svg.selectAll(".legend").data(positions.offense).enter().append("g");
 
@@ -221,6 +240,22 @@
                     return d.label;
                 });
 
+            var weeks = {"weeks" : [{"week" : "week 1"}, 
+                                      {"week" : "week 2"}, 
+                                      {"week" : "week 3"},
+                                      {"week" : "week 4"},
+                                      {"week" : "week 5"},
+                                      {"week" : "week 6"},
+                                      {"week" : "week 7"}]};
+
+             var opponents = {"opponents" : [{"team" : "Jets"}, 
+                                            {"team" : "49ers"},
+                                            {"team" : "Patriots"},
+                                            {"team" : "Cowboys"},
+                                            {"team" : "Packers"},
+                                            {"team" : "BYE"},
+                                            {"team" : "Dolphins"}]};
+
             //import data
             Promise.all([d3.json("/data/depth/depth_week_1.json"), d3.json("/data/injuries/injuries_week_1.json"),])
                 .then(function(files) {
@@ -231,21 +266,29 @@
                     var injuries = files[1];
                     dataset = data;
 
-                    offTeam.on('change',updateCircles)
+                    weekList.on('change',updateCircles)
                         .selectAll('option')
-                            .data(data[0].teams)
+                            .data(weeks.weeks)
                             .enter()
                         .append('option')
                             .attr('value',function (d,i) { return i })
-                            .text(function (d) { return d.name });
+                            .text(function (d) { return d.week });
 
-                    defTeam.on('change',updateCircles)
-                        .selectAll('option')
-                            .data(data[0].teams)
-                            .enter()
-                        .append('option')
-                            .attr('value',function (d,i) { return i })
-                            .text(function (d) { return d.name });
+                    // offTeam.on('change',updateCircles)
+                    //     .selectAll('option')
+                    //         .data(data[0].teams)
+                    //         .enter()
+                    //     .append('option')
+                    //         .attr('value',function (d,i) { return i })
+                    //         .text(function (d) { return d.name });
+
+                    // defTeam.on('change',updateCircles)
+                    //     .selectAll('option')
+                    //         .data(data[0].teams)
+                    //         .enter()
+                    //     .append('option')
+                    //         .attr('value',function (d,i) { return i })
+                    //         .text(function (d) { return d.name });
 
                     var tooltip = svg.append("g")
                         .attr("class", "tooltip")
@@ -265,33 +308,83 @@
                         .style("fill", "white");
 
 
-                    offTeam.property('value', '10');
-                    defTeam.property('value', '27');
+                    // offTeam.property('value', '10');
+                    // defTeam.property('value', '27');
 
                     updateCircles();
 
 
                     function updateCircles() {
-                        var offValue = offTeam.property('value');
-                        var defValue = defTeam.property('value');
+                        // var offValue = offTeam.property('value');
+                        // var defValue = defTeam.property('value');
 
-                        var offData = data[0].teams[offValue];
-                        var defData = data[0].teams[defValue];
+                        // var offData = data[0].teams[offValue];
+                        // var defData = data[0].teams[defValue];
 
+                        // var offInj;
+
+                        let offValue, defValue;
+
+                        var weekValue = weekList.property('value');
+
+                        var opponent = opponents.opponents[weekValue].team;
+
+                        // offInfo.select("text").text("Lions");
+                        // defInfo.select("text").text(opponent);
+
+                        if(opponent == "Jets"){
+                            defImg.attr("xlink:href", "/data/teams/jets.png")
+                        } else if(opponent == "49ers"){
+                            defImg.attr("xlink:href", "/data/teams/49ers.png")
+                        } else if (opponent == "Patriots") {
+                             defImg.attr("xlink:href", "/data/teams/patriots.png")
+                        }else if (opponent == "Cowboys") {
+                             defImg.attr("xlink:href", "/data/teams/cowboys.png")
+                        } else if (opponent == "Packers") {
+                             defImg.attr("xlink:href", "/data/teams/packers.png")
+                        } else if (opponent == "Dolphins") {
+                             defImg.attr("xlink:href", "/data/teams/dolphins.png")
+                        } else {
+                            defImg.attr("xlink:href", "/data/teams/bye.png")
+                        }
+
+                        /* finds teams by week (according to schedule) */
+                        for(var i = 0; i < data[weekValue].teams.length; i++){
+                            if(data[weekValue].teams[i].name == opponent){
+                                defValue = i;
+                            }
+                        }
+                        // console.log(opponent);
+                        // console.log(defValue);
+
+                        for(var i = 0; i < data[weekValue].teams.length; i++){
+                            if(data[weekValue].teams[i].name == "Lions"){
+                                offValue = i;
+                            }
+                        }
+
+                        var offData = data[weekValue].teams[offValue];
+                        var defData = data[weekValue].teams[defValue];
+
+                        // console.log(offData.name);
+                        console.log(opponent);
+                        console.log(weekValue);
+                        if(weekValue != 5){
                         var offInj;
-                       for(var i = 0; i < injuries[0].teams.length; i++){
-                            if(injuries[0].teams[i].name == offData.name){
-                                offInj = injuries[0].teams[i];
+                        for(var i = 0; i < injuries[weekValue].teams.length; i++){
+                            if(injuries[weekValue].teams[i].name == offData.name){
+                                offInj = injuries[weekValue].teams[i];
                             }
                         }
                         var defInj;
-                         for(var i = 0; i < injuries[0].teams.length; i++){
-                            if(injuries[0].teams[i].name == defData.name){
-                                defInj = injuries[0].teams[i];
+                        for(var i = 0; i < injuries[weekValue].teams.length; i++){
+                            if(injuries[weekValue].teams[i].name == defData.name){
+                                defInj = injuries[weekValue].teams[i];
                             }
                         }
 
-                        g_o.on("mouseover", function(d) { tooltip.style("display", null);
+                        g_o.on("mouseover", function(d) { 
+                            tooltip.style("display", null);
                             var sel = d3.select(this)
                                 .style("opacity", 0.2)
 
@@ -408,17 +501,17 @@
                             .style("opacity", 1)
                         })
 
-                        g_d.on("mouseover", function(d) { tooltip.style("display", null);
+                        g_d.on("mouseover", function(d) { 
+                            tooltip.style("display", null);
                             var sel = d3.select(this)
                                 .style("opacity", 0.2)
-
                             var data3 = defData.defense;
-                             var injData = defInj.players;
+                            var injData = defInj.players;
                             var playerPos = d3.select(this).text();
                             var playerVec = [];
                             var players = data3.filter(function(data){
                                 if(playerPos == 'DT'){
-                                    if(data.position.name == 'RDT' || data.position.name == 'NT' || data.position.name == 'LDT'){
+                                    if(data.position.name == 'RDT' || data.position.name == 'NT' || data.position.name == 'LDT' || data.position.name == 'DL'){
                                         return data.position.name
                                     } else {
                                         return data.position.name.includes(playerPos)
@@ -436,7 +529,7 @@
                                         return data.position.name.includes(playerPos)
                                     }
                                 } else if(playerPos == 'DE'){
-                                    if(data.position.name == 'LEO'){
+                                    if(data.position.name == 'LEO' || data.position.name == 'DL'){
                                         return data.position.name
                                     } else {
                                         return data.position.name.includes(playerPos)
@@ -528,8 +621,25 @@
                             d3.select(this)
                             .style("opacity", 1)
                         })
+                        } else {
+                             g_d.on("mouseover", function(d) { 
+                                tooltip.style("display", "none");
+                                tooltip.selectAll('tspan').remove();
+                                var sel = d3.select(this)
+                                .style("opacity", 0.2)
+                             })
+
+                             g_o.on("mouseover", function(d) { 
+                                tooltip.style("display", "none");
+                                tooltip.selectAll('tspan').remove();
+                                var sel = d3.select(this)
+                                .style("opacity", 0.2)
+                             })
+                            
+                        }
                     }
                 });
+                
 
         },
     }

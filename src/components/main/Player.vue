@@ -88,7 +88,7 @@
                                 <div class="headline">Team Depth</div>
                             </v-card-title>
                             <v-card-actions>
-                                The following visualization is a breakdown of team depth for the current player and opponents.  It shows team injury by position.  By default, the current players offense will show against the opponents defense. Clicking on the team name allows you to change the team.
+                                The following visualization is a breakdown of team depth for the current player and opponents.  It shows team injury by position.  By default, the current players offense will show against the opponents defense. The user is able to select the week played.
                             </v-card-actions>
                             <v-card-actions>
                                 <Depth></Depth>

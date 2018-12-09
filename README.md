@@ -1,7 +1,5 @@
 # cs597project
 
-# cs597dataviz -- Project Instructions
-
 ## Installing nodejs for the first time.
 
 If you have nodejs and npm installed, you can skip to the RUN PROJECT section below.
@@ -44,7 +42,7 @@ Then run:
 
 ## RUN PROJECT
 
-Unzip `cs597dataviz-master.zip` into its own directory.
+Clone this repo.
 
 Open the project directory and run `npm install` from the command line.  This will install library dependencies from package.json.
 
